@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./recruiter-search-backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./recruiter-search-backend/.env
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+  frontend:
+    build:
+      context: ./recruiter-search-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+networks:
+  default:
+    name: recruiter_search_net
